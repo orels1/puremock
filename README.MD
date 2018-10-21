@@ -19,6 +19,10 @@
   </sub>
 </p>
 
+## Motivation
+
+Hacktoberfest, mainly, but also just a search for a package like this that took me more than an hour and ultimately pointed me to Mockoon (which is great, btw, [check it out](https://mockoon.com/)). But I figured I should make this too, since I have a soft spot for cute zero-dep tools, so here we are. Hope you'll enjoy using it as much, as I did developing it.
+
 ## Installation
 
 ```shell
@@ -30,8 +34,6 @@ yarn global add puremock
 ```
 
 ## Usage
-
-By default the server will start at `localhost:3000`.
 
 ### Create a mock file
 
@@ -59,6 +61,8 @@ That's about it as far as configuration goes. You can supply any kind of HTTP me
 Default response code is 200, and the `Content-Type` header is set to `application/json`.
 
 ### Start the server
+
+By default the server will start at `localhost:3000`.
 
 ```shell
 # uses a mockApi.json in the project root
