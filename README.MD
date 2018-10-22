@@ -37,6 +37,8 @@ yarn global add puremock
 
 ### Create a mock file
 
+By default puremock will look for `mockApi.json` in the project root. But you can also supply a different path (see below).
+
 ```json
 {
   "GET /": {
