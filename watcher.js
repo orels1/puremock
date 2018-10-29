@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 const fs = require('fs');
 const { loadMockApi } = require('./utils');
 
@@ -17,7 +18,7 @@ const watch = (path, mockApi) => {
     // remove stale stuff
     Object.keys(mockApi)
       .filter(k => !Object.keys(newApi).includes(k))
-      .forEach(k => {
+      .forEach((k) => {
         delete mockApi[k];
       });
     // add new stuff

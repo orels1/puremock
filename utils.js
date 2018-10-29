@@ -1,5 +1,6 @@
 const fs = require('fs');
 
+/* eslint-disable no-param-reassign */
 const parseCLIOptions = (options, config) => {
   if (options.length === 0) {
     return;
@@ -10,13 +11,14 @@ const parseCLIOptions = (options, config) => {
     return;
   }
   if (arg.includes('--')) {
-    config[arg.substr(2)] = options[1];
+    config[arg.substr(2)] = options[1]; /* eslint-disable-line prefer-destructuring */
     options.splice(0, 2);
   } else {
     options.splice(0, 1);
   }
   parseCLIOptions(options);
 };
+/* eslint-enable no-param-reassign */
 
 exports.parseCLIOptions = parseCLIOptions;
 
@@ -28,7 +30,7 @@ const readFile = (path, retries) => {
   return response;
 };
 
-const loadMockApi = path => {
+const loadMockApi = (path) => {
   try {
     fs.statSync(path);
     const apiData = readFile(path, 10);
@@ -37,19 +39,21 @@ const loadMockApi = path => {
   } catch (e) {
     if (e.name === 'SyntaxError') {
       console.log(`⚠️  Could not parse ${path}`);
-      return;
+      return null;
     }
     if (e.message.includes('ENOENT')) {
       console.log(`⚠️  No api config found @ ${path}`);
-      return;
+      return null;
     }
     console.error(e);
     process.exit(1);
+    return null;
   }
 };
 
 exports.loadMockApi = loadMockApi;
 
+/* eslint-disable no-param-reassign */
 const parseKeys = (roots, parts, key = '') => {
   if (roots.length === 0) {
     // if lengths match
@@ -72,16 +76,18 @@ const parseKeys = (roots, parts, key = '') => {
   // if we have no match
   return '';
 };
+/* eslint-enable no-param-reassign */
 
+/* eslint-disable no-restricted-syntax */
 const findMockKey = (roots, parts) => {
   let key = '';
-  for (rootPath of roots) {
+  for (const rootPath of roots) {
     const tempKey = parseKeys(
       rootPath
         .split(' ')[1]
         .split('/')
         .slice(1),
-      parts
+      parts,
     );
     if (tempKey.length && !tempKey.includes(':') && key && key.includes(':')) {
       key = tempKey;
@@ -94,5 +100,6 @@ const findMockKey = (roots, parts) => {
   }
   return key;
 };
+/* eslint-enable no-restricted-syntax */
 
 exports.findMockKey = findMockKey;
