@@ -55,7 +55,7 @@ By default puremock will look for `mockApi.json` in the project root. But you ca
       "error": "Internal Server Error"
     }
   },
-  "GET /articles/:name" {
+  "GET /articles/:name": {
     "response": {
       "title": "Foobar"
     }
