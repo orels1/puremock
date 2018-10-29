@@ -6,19 +6,18 @@
  */
 
 const http = require('http');
-const fs = require('fs');
-const { parseCLIOptions, loadMockApi } = require('./utils');
+const { parseCLIOptions, loadMockApi, findMockKey } = require('./utils');
 const watch = require('./watcher');
 
 const config = {
   port: 3000,
-  path: './mockApi.json'
+  path: './mockApi.json',
 };
 
 const args = process.argv.slice(2);
 parseCLIOptions(args, config);
 
-let mockApi = loadMockApi(config.path);
+const mockApi = loadMockApi(config.path);
 console.log(`🧐  Loaded api from ${config.path}`);
 watch(config.path, mockApi);
 
@@ -27,7 +26,18 @@ const server = http.createServer((req, res) => {
   res.setHeader('Content-Type', 'application/json');
 
   const { method, url } = req;
-  const data = mockApi[[method, url].join(' ')];
+
+  let key = '';
+  const parts = url.split('/').slice(1);
+  if (parts.length > 1) {
+    const roots = Object.keys(mockApi).filter(k => k.startsWith(`${method} /${parts[0]}`));
+
+    key = findMockKey(roots, parts);
+  } else {
+    key = url;
+  }
+
+  const data = mockApi[[method, key].join(' ')];
 
   console.log(`👉 ${method} ${url}`);
 

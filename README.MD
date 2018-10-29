@@ -46,7 +46,7 @@ By default puremock will look for `mockApi.json` in the project root. But you ca
       "status": "ok"
     }
   },
-  "GET /": {
+  "GET /error": {
     "status": 503,
     "header": {
       "x-powered-by": "mock-api-server"
@@ -54,11 +54,20 @@ By default puremock will look for `mockApi.json` in the project root. But you ca
     "response": {
       "error": "Internal Server Error"
     }
+  },
+  "GET /articles/:name" {
+    "response": {
+      "title": "Foobar"
+    }
   }
 }
 ```
 
 That's about it as far as configuration goes. You can supply any kind of HTTP method, set response codes and headers.
+
+Path params are supported (with multiple levels), so you can have endpoints like `/root/:param1/:param2` or `/root/exact/:param1` and so on. Useful when you have a bunch of dynamic IDs your app requests, but you don't care if the same thing is being returned.
+
+Check `example.json` for references.
 
 Default response code is 200, and the `Content-Type` header is set to `application/json`.
 
@@ -82,6 +91,6 @@ puremock --port 4000
 There are still things we can add while staying lightweight and zero-dependency:
 
 - [x] Add a mock file hot-reload
-- [ ] Support for dynamic urls (i.e. `/posts/:id)
+- [x] Support for dynamic urls (i.e. `/posts/:id)
 - [ ] Add a set of prebuilt error responses so users can just supply `status: 503) to get a meaningful response object without defining it
 - [ ] Improve the watcher logic (it fails from time to time so I have a bunch of retries there)
