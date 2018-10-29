@@ -15,3 +15,9 @@ jobs:
       - run: echo "//registry.npmjs.org/:_authToken=" >> .npmrc
       - run: echo $NPM_TOKEN >> .npmrc
       - run: yarn publish --non-interactive
+
+workflows:
+  version: 2
+  publish:
+    jobs:
+      - publish
