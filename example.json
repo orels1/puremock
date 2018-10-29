@@ -1,0 +1,27 @@
+{
+  "GET /": {
+    "response": {
+      "status": "ok"
+    }
+  },
+  "GET /articles/:name": {
+    "response": {
+      "wildcard": true
+    }
+  },
+  "GET /articles/exact": {
+    "response": {
+      "exact": true
+    }
+  },
+  "GET /articles/:author/:name": {
+    "response": {
+      "deepWildcard": true
+    }
+  },
+  "GET /articles/exact/exact": {
+    "response": {
+      "deepExact": true
+    }
+  }
+}

@@ -49,3 +49,50 @@ const loadMockApi = path => {
 };
 
 exports.loadMockApi = loadMockApi;
+
+const parseKeys = (roots, parts, key = '') => {
+  if (roots.length === 0) {
+    // if lengths match
+    if (parts.length === 0) {
+      return key;
+    }
+    return '';
+  }
+
+  // if we have an exact match
+  if (roots[0] === parts[0]) {
+    key += `/${roots[0]}`;
+    return parseKeys(roots.slice(1), parts.slice(1), key);
+  }
+  // if we have a `:name` wildcard
+  if (roots[0].includes(':')) {
+    key += `/${roots[0]}`;
+    return parseKeys(roots.slice(1), parts.slice(1), key);
+  }
+  // if we have no match
+  return '';
+};
+
+const findMockKey = (roots, parts) => {
+  let key = '';
+  for (rootPath of roots) {
+    const tempKey = parseKeys(
+      rootPath
+        .split(' ')[1]
+        .split('/')
+        .slice(1),
+      parts
+    );
+    if (tempKey.length && !tempKey.includes(':') && key && key.includes(':')) {
+      key = tempKey;
+      break;
+    }
+    if (key.length) {
+      break;
+    }
+    key = tempKey;
+  }
+  return key;
+};
+
+exports.findMockKey = findMockKey;
