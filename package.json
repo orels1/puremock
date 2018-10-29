@@ -1,6 +1,6 @@
 {
   "name": "puremock",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A zero-dependency node mock api server",
   "main": "index.js",
   "bin": {

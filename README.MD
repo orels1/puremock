@@ -94,3 +94,5 @@ There are still things we can add while staying lightweight and zero-dependency:
 - [x] Support for dynamic urls (i.e. `/posts/:id)
 - [ ] Add a set of prebuilt error responses so users can just supply `status: 503) to get a meaningful response object without defining it
 - [ ] Improve the watcher logic (it fails from time to time so I have a bunch of retries there)
+
+The package is auto-published with the latest tag in the package.json when merged into `master`.
